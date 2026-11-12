@@ -1,6 +1,8 @@
-# Escáner IaC
+# IaC Secret Scanner
 
 Escáner estático ligero para localizar patrones habituales de secretos expuestos en archivos de infraestructura como código y configuración.
+
+[![Python tests](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml) · [![Container build](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml)
 
 ## Qué comprueba
 
@@ -17,11 +19,11 @@ Python 3.11+. No requiere dependencias externas.
 ## Uso
 
 ```bash
-python scan.py .
+python iac_secret_scanner.py .
 python scan.py /ruta/al/repositorio
 ```
 
-La salida es JSON. Devuelve código de salida `1` si encuentra coincidencias y `0` si no detecta patrones.
+La salida es JSON. Devuelve código de salida `1` si encuentra coincidencias y `0` si no detecta patrones. Omite enlaces simbólicos y no sigue rutas que salgan del directorio seleccionado.
 
 ## Docker
 

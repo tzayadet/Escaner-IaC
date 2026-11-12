@@ -1,34 +1,61 @@
-import os, re, json, argparse, sys
+#!/usr/bin/env python3
+"""Lightweight static scanner for common secrets in IaC/configuration files.
+
+This is a heuristic helper, not a replacement for a dedicated secret scanner.
+Run it only against repositories and files you are authorized to inspect.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
 from pathlib import Path
 
 PATTERNS = {
-    "aws_key": r"(?i)(AKIA|ASIA)[0-9A-Z]{16}",
-    "private_key": r"-----BEGIN (RSA|EC|DSA|OPENSSH) PRIVATE KEY-----",
-    "password": r"(?i)(password|passwd|secret)\s*[:=]\s*['\"][^'\"]{8,}"
+    "aws_key": re.compile(r"(?i)\b(?:AKIA|ASIA)[0-9A-Z]{16}\b"),
+    "private_key": re.compile(r"-----BEGIN (?:RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----"),
+    "password": re.compile(r"""(?i)\b(?:password|passwd|secret)\s*[:=]\s*['"][^'"]{8,}['"]"""),
 }
+EXTENSIONS = {".tf", ".yml", ".yaml", ".json", ".env", ".sh", ".toml", ".ini"}
+SKIP_DIRS = {".git", ".venv", "venv", "node_modules", "__pycache__"}
 
-def scan_file(f):
-    hits = []
+
+def scan_file(path: Path) -> list[str]:
     try:
-        with open(f, encoding="utf-8", errors="ignore") as fp:
-            content = fp.read()
-            for k, pat in PATTERNS.items():
-                if re.search(pat, content):
-                    hits.append(k)
-    except: pass
-    return hits
+        content = path.read_text(encoding="utf-8", errors="ignore")
+    except OSError as exc:
+        return [f"read_error:{exc.__class__.__name__}"]
+    return [name for name, pattern in PATTERNS.items() if pattern.search(content)]
 
-def run(root):
+
+def iter_files(root: Path):
+    for path in root.rglob("*"):
+        if not path.is_file() or any(part in SKIP_DIRS for part in path.parts):
+            continue
+        if path.suffix.lower() in EXTENSIONS or path.name == ".env":
+            yield path
+
+
+def run(root: Path) -> dict[str, list[str]]:
     results = {}
-    for p in Path(root).rglob("*.{tf,yml,yaml,json,env,sh}"):
-        h = scan_file(p)
-        if h: results[str(p)] = h
+    for path in iter_files(root):
+        hits = scan_file(path)
+        if hits:
+            results[str(path)] = hits
     return results
 
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("path", nargs="?", type=Path, default=Path("."))
+    args = parser.parse_args()
+    if not args.path.exists() or not args.path.is_dir():
+        parser.error(f"not a directory: {args.path}")
+    results = run(args.path)
+    print(json.dumps(results, indent=2, ensure_ascii=False))
+    return 1 if results else 0
+
+
 if __name__ == "__main__":
-    p = argparse.ArgumentParser()
-    p.add_argument("path", nargs="?", default=".")
-    args = p.parse_args()
-    out = run(args.path)
-    print(json.dumps(out, indent=2))
-    sys.exit(1 if out else 0)
+    raise SystemExit(main())

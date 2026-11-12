@@ -52,6 +52,26 @@ class ScanTests(unittest.TestCase):
 
             self.assertEqual(run(root), {})
 
+    def test_detects_github_google_and_slack_tokens(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "secrets.env"
+            path.write_text(
+                "GITHUB_TOKEN=ghp_" + "A" * 36 + "\\n"
+                "GOOGLE_API_KEY=AIza" + "A" * 35 + "\\n"
+                "SLACK_TOKEN=xoxb-" + "A" * 20,
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                scan_file(path),
+                ["github_token", "google_api_key", "slack_token"],
+            )
+
+    def test_skips_files_over_the_configured_size_limit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "large.env"
+            path.write_bytes(b"A" * (5 * 1024 * 1024 + 1))
+            self.assertEqual(scan_file(path), [])
+
 
 if __name__ == "__main__":
     unittest.main()

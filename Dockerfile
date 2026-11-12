@@ -5,7 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 RUN useradd --create-home --uid 10001 appuser
-COPY --chown=appuser:appuser scan.py .
+COPY --chown=appuser:appuser iac_secret_scanner.py .
 USER appuser
 
 ENTRYPOINT ["python", "scan.py"]

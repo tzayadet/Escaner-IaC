@@ -12,7 +12,9 @@ A local Python scanner for identifying potential exposed secrets in infrastructu
 ## Features
 
 - Detects common AWS access-key prefixes such as `AKIA` and `ASIA`.
+- Identifies GitHub personal-access-token patterns, Google API keys and Slack tokens.
 - Identifies private-key headers and password/secret assignments.
+- Skips individual files larger than 5 MB to keep local scans bounded.
 - Scans Terraform, YAML, JSON, shell, TOML, INI and `.env` files.
 - Produces structured JSON findings and CI-friendly exit codes.
 - Analyses files locally without uploading their contents.
@@ -52,7 +54,7 @@ If a real credential is exposed, revoke or rotate it. Only scan repositories and
 
 ## Showcase and deployment
 
-The [showcase source](docs/index.html) uses illustrative findings only. It does not inspect repositories or files in the browser. The Pages workflow is present, but publication is pending repository-level Pages activation.
+The [live showcase](https://tzayadet.github.io/Escaner-IaC/) uses illustrative findings only. It does not inspect repositories or files in the browser.
 
 ## License
 

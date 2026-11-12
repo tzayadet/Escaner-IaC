@@ -22,6 +22,8 @@ SKIP_DIRS = {".git", ".venv", "venv", "node_modules", "__pycache__"}
 
 
 def scan_file(path: Path) -> list[str]:
+    if path.is_symlink():
+        return []
     try:
         content = path.read_text(encoding="utf-8", errors="ignore")
     except OSError as exc:
@@ -62,8 +64,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("path", nargs="?", type=Path, default=Path("."))
     args = parser.parse_args()
-    if not args.path.exists() or not args.path.is_dir():
-        parser.error(f"not a directory: {args.path}")
+    if args.path.is_symlink() or not args.path.exists() or not args.path.is_dir():
+        parser.error(f"not a valid scan directory (symbolic links are not accepted): {args.path}")
     results = run(args.path)
     print(json.dumps(results, indent=2, ensure_ascii=False))
     return 1 if results else 0

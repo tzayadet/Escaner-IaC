@@ -39,3 +39,10 @@ Utilízalo únicamente en repositorios que tengas autorización para analizar.
 ## Licencia
 
 Consulta [LICENSE](LICENSE).
+
+
+## Demo y documentación visual
+
+Showcase estático con un informe ficticio: https://tzayadet.github.io/Escaner-IaC/
+
+La demo no analiza archivos ni envía información. El escáner real es una herramienta CLI local basada en patrones heurísticos.

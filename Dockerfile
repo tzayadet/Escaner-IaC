@@ -8,4 +8,4 @@ RUN useradd --create-home --uid 10001 appuser
 COPY --chown=appuser:appuser iac_secret_scanner.py .
 USER appuser
 
-ENTRYPOINT ["python", "scan.py"]
+ENTRYPOINT ["python", "iac_secret_scanner.py"]

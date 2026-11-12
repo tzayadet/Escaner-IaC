@@ -20,7 +20,7 @@ Python 3.11+. No requiere dependencias externas.
 
 ```bash
 python iac_secret_scanner.py .
-python scan.py /ruta/al/repositorio
+python iac_secret_scanner.py /ruta/al/repositorio
 ```
 
 La salida es JSON. Devuelve código de salida `1` si encuentra coincidencias y `0` si no detecta patrones. Omite enlaces simbólicos y no sigue rutas que salgan del directorio seleccionado.

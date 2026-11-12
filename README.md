@@ -39,9 +39,15 @@ El análisis se basa en patrones y expresiones regulares. Puede producir falsos 
 
 Si aparece una credencial real, debe revocarse o rotarse. Ejecuta el escáner únicamente sobre repositorios que tengas autorización para revisar.
 
-## Estado de la demo
+## Publicar el showcase
 
-El showcase estático se encuentra en `docs/`. La publicación de GitHub Pages sigue pendiente de activar en **Settings → Pages** y de configurar la variable de Actions `ENABLE_PAGES=true`.
+El showcase estático se encuentra en [docs/index.html](docs/index.html). Para publicarlo:
+
+1. En **Settings → Pages**, selecciona **GitHub Actions** como origen.
+2. En **Settings → Secrets and variables → Actions → Variables**, crea `ENABLE_PAGES` con valor `true`.
+3. Ejecuta **Deploy Escaner-IaC showcase to GitHub Pages** desde Actions.
+
+La demo muestra un informe ficticio. El análisis real se ejecuta localmente y no envía archivos ni resultados a ningún servidor.
 
 ## Licencia
 

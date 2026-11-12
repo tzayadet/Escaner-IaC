@@ -15,9 +15,9 @@ from pathlib import Path
 PATTERNS = {
     "aws_key": re.compile(r"(?i)\b(?:AKIA|ASIA)[0-9A-Z]{16}\b"),
     "private_key": re.compile(r"-----BEGIN (?:RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----"),
-    "github_token": re.compile(r"\\bgh[pousr]_[A-Za-z0-9]{30,255}\\b"),
-    "google_api_key": re.compile(r"\\bAIza[0-9A-Za-z_-]{35}\\b"),
-    "slack_token": re.compile(r"\\bxox[baprs]-[A-Za-z0-9-]{10,}\\b"),
+    "github_token": re.compile(r"\bgh[pousr]_[A-Za-z0-9]{30,255}\b"),
+    "google_api_key": re.compile(r"\bAIza[0-9A-Za-z_-]{35}\b"),
+    "slack_token": re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b"),
     "password": re.compile(r"""(?i)\b(?:password|passwd|secret)\s*[:=]\s*['"][^'"]{8,}['"]"""),
 }
 EXTENSIONS = {".tf", ".yml", ".yaml", ".json", ".env", ".sh", ".toml", ".ini"}

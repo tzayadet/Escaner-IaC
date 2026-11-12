@@ -1,15 +1,15 @@
 # IaC Secret Scanner
 
-A local Python scanner for identifying potential exposed secrets in infrastructure-as-code and configuration files. It produces structured JSON output and can be used as a lightweight CI gate.
+A local Python scanner for identifying potential exposed secrets in infrastructure-as-code and configuration files. It produces structured JSON output and CI-friendly exit codes.
 
 <p align="center">
-  <a href="https://tzayadet.github.io/Escaner-IaC/"><img src="https://img.shields.io/badge/SHOWCASE-OPEN-00a86b?style=flat-square" alt="Showcase"></a>
+  <a href="https://github.com/tzayadet/Escaner-IaC/blob/main/docs/index.html"><img src="https://img.shields.io/badge/SHOWCASE-SOURCE-00a86b?style=flat-square" alt="Showcase source"></a>
   <a href="https://github.com/tzayadet/Escaner-IaC"><img src="https://img.shields.io/badge/SOURCE-GITHUB-161b22?style=flat-square&logo=github" alt="Source"></a>
 </p>
 
 [![Tests](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml) · [![Container build](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml)
 
-## What it does
+## Features
 
 - Detects common AWS access-key prefixes such as `AKIA` and `ASIA`.
 - Identifies private-key headers and password/secret assignments.
@@ -44,19 +44,15 @@ The scanner exits with code `1` when matches are found and `0` when no patterns 
 | `tests/` | Automated tests |
 | `.github/workflows/` | CI, container build and Pages workflow |
 
-## Showcase
-
-The public page uses illustrative findings only. Actual scanning runs locally from the CLI; the browser page does not inspect repositories or files.
-
 ## Detection limits
 
 Detection is pattern-based. False positives and false negatives are possible; the scanner does not validate credentials or semantically interpret Terraform. It does not modify scanned files.
 
-If a real credential is exposed, revoke or rotate it. Only scan repositories and files you are authorized to assess.
+If a real credential is exposed, revoke or rotate it. Only scan repositories and files you are authorised to assess.
 
-## Deployment
+## Showcase and deployment
 
-The Pages workflow publishes `docs/`. GitHub Pages must be configured to use GitHub Actions, and the repository variable `ENABLE_PAGES=true` must be set before deployment.
+The [showcase source](docs/index.html) uses illustrative findings only. It does not inspect repositories or files in the browser. The Pages workflow is present, but publication is pending repository-level Pages activation.
 
 ## License
 

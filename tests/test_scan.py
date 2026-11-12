@@ -39,6 +39,7 @@ class ScanTests(unittest.TestCase):
                 self.skipTest("Symbolic links are not available in this environment")
 
             self.assertEqual(run(root), {})
+            self.assertEqual(scan_file(link), [])
 
     def test_skips_dependency_directories(self):
         with tempfile.TemporaryDirectory() as tmp:

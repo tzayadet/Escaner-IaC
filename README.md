@@ -1,54 +1,66 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/SECURITY_ENGINEERING-IAC_SECRET_SCANNER-101010?style=for-the-badge&labelColor=050805&color=00FF41" alt="IaC Secret Scanner"/>
+  <img src="https://img.shields.io/badge/PYTHON-STATIC_ANALYSIS-101010?style=for-the-badge&logo=python&logoColor=00FF41" alt="Python static analysis"/>
+</p>
+
 # IaC Secret Scanner
 
-Escáner estático en Python para localizar posibles secretos expuestos en archivos de infraestructura como código y configuración.
+Escáner estático en Python para localizar posibles secretos expuestos en archivos de infraestructura como código y configuración. Analiza archivos localmente y genera un informe JSON; no envía el contenido a ningún servidor.
+
+<p align="center">
+  <a href="https://tzayadet.github.io/Escaner-IaC/"><strong>LIVE SHOWCASE ↗</strong></a> ·
+  <a href="https://github.com/tzayadet/Escaner-IaC"><strong>SOURCE CODE</strong></a>
+</p>
 
 [![Tests](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml) · [![Docker](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml)
 
-**Demo:** [ver showcase](docs/index.html) · **Código:** [iac_secret_scanner.py](iac_secret_scanner.py)
+> El showcase contiene un informe ficticio. El análisis real se ejecuta desde la CLI.
 
-> La demo muestra un informe ficticio. El análisis real se ejecuta localmente y no envía archivos ni resultados a ningún servidor.
+## What it does
 
-## Qué detecta
+- Detecta identificadores AWS con prefijos habituales `AKIA` y `ASIA`.
+- Localiza cabeceras de claves privadas.
+- Busca asignaciones de contraseñas y secretos en texto.
+- Analiza Terraform, YAML, JSON, shell, TOML, INI y archivos `.env`.
+- Devuelve resultados estructurados en JSON y códigos de salida útiles para CI.
 
-- Identificadores AWS con prefijos habituales `AKIA` y `ASIA`.
-- Cabeceras de claves privadas.
-- Asignaciones de contraseñas y secretos en texto.
-- Archivos Terraform, YAML, JSON, shell, TOML, INI y `.env`.
+## Quick start
 
-## Requisitos y uso
-
-Python 3.11 o superior. No requiere paquetes externos.
+**Requirements:** Python 3.11+. No external Python dependencies.
 
 ```bash
 python iac_secret_scanner.py .
-python iac_secret_scanner.py /ruta/al/repositorio
+python iac_secret_scanner.py /path/to/repository
 ```
 
-La salida es JSON. Devuelve código de salida `1` si encuentra coincidencias y `0` si no detecta patrones.
-
-Con Docker:
+**Docker**
 
 ```bash
 docker build -t iac-secret-scanner .
 docker run --rm -v "$PWD:/workspace:ro" iac-secret-scanner /workspace
 ```
 
-## Limitaciones
+El proceso devuelve código de salida `1` si encuentra coincidencias y `0` si no detecta patrones.
 
-El análisis se basa en patrones y expresiones regulares. Puede producir falsos positivos y negativos; no valida credenciales ni interpreta semánticamente Terraform. No modifica los archivos analizados.
+## Project layout
 
-Si aparece una credencial real, debe revocarse o rotarse. Ejecuta el escáner únicamente sobre repositorios que tengas autorización para revisar.
+| Path | Purpose |
+|---|---|
+| `iac_secret_scanner.py` | Motor de análisis estático |
+| `docs/` | Showcase con resultados de ejemplo |
+| `tests/` | Pruebas automatizadas |
+| `.github/workflows/` | CI, build de contenedor y Pages |
 
-## Publicar el showcase
+## Detection limits
 
-El showcase estático se encuentra en [docs/index.html](docs/index.html). Para publicarlo:
+La detección se basa en patrones y expresiones regulares. Puede producir falsos positivos y negativos; no valida credenciales ni interpreta semánticamente Terraform. No modifica los archivos analizados.
 
-1. En **Settings → Pages**, selecciona **GitHub Actions** como origen.
-2. En **Settings → Secrets and variables → Actions → Variables**, crea `ENABLE_PAGES` con valor `true`.
-3. Ejecuta **Deploy Escaner-IaC showcase to GitHub Pages** desde Actions.
+Si aparece una credencial real, revócala o rótala. Ejecuta el escáner únicamente sobre repositorios que tengas autorización para revisar.
 
-La demo muestra un informe ficticio. El análisis real se ejecuta localmente y no envía archivos ni resultados a ningún servidor.
+## Deployment
 
-## Licencia
+GitHub Pages publica el contenido de `docs/` mediante `.github/workflows/pages.yml`. Requiere configurar Pages con GitHub Actions y establecer la variable `ENABLE_PAGES=true`.
 
-Consulta [LICENSE](LICENSE).
+## License
+
+See [LICENSE](LICENSE).

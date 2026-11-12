@@ -54,7 +54,7 @@ If a real credential is exposed, revoke or rotate it. Only scan repositories and
 
 ## Showcase and deployment
 
-The [live showcase](https://tzayadet.github.io/Escaner-IaC/) uses illustrative findings only. It does not inspect repositories or files in the browser.
+The [showcase source](docs/index.html) uses illustrative findings only. It does not inspect repositories or files in the browser. The deployment workflow is ready; GitHub Pages must first be enabled in repository settings with GitHub Actions as the source.
 
 ## License
 

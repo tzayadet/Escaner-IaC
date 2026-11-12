@@ -1,66 +1,63 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/SECURITY_ENGINEERING-IAC_SECRET_SCANNER-101010?style=for-the-badge&labelColor=050805&color=00FF41" alt="IaC Secret Scanner"/>
-  <img src="https://img.shields.io/badge/PYTHON-STATIC_ANALYSIS-101010?style=for-the-badge&logo=python&logoColor=00FF41" alt="Python static analysis"/>
-</p>
-
 # IaC Secret Scanner
 
-Escáner estático en Python para localizar posibles secretos expuestos en archivos de infraestructura como código y configuración. Analiza archivos localmente y genera un informe JSON; no envía el contenido a ningún servidor.
+A local Python scanner for identifying potential exposed secrets in infrastructure-as-code and configuration files. It produces structured JSON output and can be used as a lightweight CI gate.
 
 <p align="center">
-  <a href="https://tzayadet.github.io/Escaner-IaC/"><strong>LIVE SHOWCASE ↗</strong></a> ·
-  <a href="https://github.com/tzayadet/Escaner-IaC"><strong>SOURCE CODE</strong></a>
+  <a href="https://tzayadet.github.io/Escaner-IaC/"><img src="https://img.shields.io/badge/SHOWCASE-OPEN-00a86b?style=flat-square" alt="Showcase"></a>
+  <a href="https://github.com/tzayadet/Escaner-IaC"><img src="https://img.shields.io/badge/SOURCE-GITHUB-161b22?style=flat-square&logo=github" alt="Source"></a>
 </p>
 
-[![Tests](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml) · [![Docker](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml)
-
-> El showcase contiene un informe ficticio. El análisis real se ejecuta desde la CLI.
+[![Tests](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/tests.yml) · [![Container build](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/Escaner-IaC/actions/workflows/container-build.yml)
 
 ## What it does
 
-- Detecta identificadores AWS con prefijos habituales `AKIA` y `ASIA`.
-- Localiza cabeceras de claves privadas.
-- Busca asignaciones de contraseñas y secretos en texto.
-- Analiza Terraform, YAML, JSON, shell, TOML, INI y archivos `.env`.
-- Devuelve resultados estructurados en JSON y códigos de salida útiles para CI.
+- Detects common AWS access-key prefixes such as `AKIA` and `ASIA`.
+- Identifies private-key headers and password/secret assignments.
+- Scans Terraform, YAML, JSON, shell, TOML, INI and `.env` files.
+- Produces structured JSON findings and CI-friendly exit codes.
+- Analyses files locally without uploading their contents.
 
-## Quick start
+## Run locally
 
-**Requirements:** Python 3.11+. No external Python dependencies.
+**Requirements:** Python 3.11 or later. No third-party Python dependencies are required.
 
 ```bash
 python iac_secret_scanner.py .
 python iac_secret_scanner.py /path/to/repository
 ```
 
-**Docker**
+## Docker
 
 ```bash
 docker build -t iac-secret-scanner .
 docker run --rm -v "$PWD:/workspace:ro" iac-secret-scanner /workspace
 ```
 
-El proceso devuelve código de salida `1` si encuentra coincidencias y `0` si no detecta patrones.
+The scanner exits with code `1` when matches are found and `0` when no patterns are detected.
 
-## Project layout
+## Project structure
 
 | Path | Purpose |
 |---|---|
-| `iac_secret_scanner.py` | Motor de análisis estático |
-| `docs/` | Showcase con resultados de ejemplo |
-| `tests/` | Pruebas automatizadas |
-| `.github/workflows/` | CI, build de contenedor y Pages |
+| `iac_secret_scanner.py` | Static scanning engine |
+| `docs/` | Showcase with synthetic findings |
+| `tests/` | Automated tests |
+| `.github/workflows/` | CI, container build and Pages workflow |
+
+## Showcase
+
+The public page uses illustrative findings only. Actual scanning runs locally from the CLI; the browser page does not inspect repositories or files.
 
 ## Detection limits
 
-La detección se basa en patrones y expresiones regulares. Puede producir falsos positivos y negativos; no valida credenciales ni interpreta semánticamente Terraform. No modifica los archivos analizados.
+Detection is pattern-based. False positives and false negatives are possible; the scanner does not validate credentials or semantically interpret Terraform. It does not modify scanned files.
 
-Si aparece una credencial real, revócala o rótala. Ejecuta el escáner únicamente sobre repositorios que tengas autorización para revisar.
+If a real credential is exposed, revoke or rotate it. Only scan repositories and files you are authorized to assess.
 
 ## Deployment
 
-GitHub Pages publica el contenido de `docs/` mediante `.github/workflows/pages.yml`. Requiere configurar Pages con GitHub Actions y establecer la variable `ENABLE_PAGES=true`.
+The Pages workflow publishes `docs/`. GitHub Pages must be configured to use GitHub Actions, and the repository variable `ENABLE_PAGES=true` must be set before deployment.
 
 ## License
 
-See [LICENSE](LICENSE).
+See [LICENSE](LICENSE) for the repository's licensing terms.

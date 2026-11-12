@@ -15,16 +15,22 @@ from pathlib import Path
 PATTERNS = {
     "aws_key": re.compile(r"(?i)\b(?:AKIA|ASIA)[0-9A-Z]{16}\b"),
     "private_key": re.compile(r"-----BEGIN (?:RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----"),
+    "github_token": re.compile(r"\\bgh[pousr]_[A-Za-z0-9]{30,255}\\b"),
+    "google_api_key": re.compile(r"\\bAIza[0-9A-Za-z_-]{35}\\b"),
+    "slack_token": re.compile(r"\\bxox[baprs]-[A-Za-z0-9-]{10,}\\b"),
     "password": re.compile(r"""(?i)\b(?:password|passwd|secret)\s*[:=]\s*['"][^'"]{8,}['"]"""),
 }
 EXTENSIONS = {".tf", ".yml", ".yaml", ".json", ".env", ".sh", ".toml", ".ini"}
 SKIP_DIRS = {".git", ".venv", "venv", "node_modules", "__pycache__"}
+MAX_FILE_BYTES = 5 * 1024 * 1024
 
 
 def scan_file(path: Path) -> list[str]:
     if path.is_symlink():
         return []
     try:
+        if path.stat().st_size > MAX_FILE_BYTES:
+            return []
         content = path.read_text(encoding="utf-8", errors="ignore")
     except OSError as exc:
         return [f"read_error:{exc.__class__.__name__}"]

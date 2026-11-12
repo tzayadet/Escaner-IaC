@@ -56,8 +56,8 @@ class ScanTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "secrets.env"
             path.write_text(
-                "GITHUB_TOKEN=ghp_" + "A" * 36 + "\\n"
-                "GOOGLE_API_KEY=AIza" + "A" * 35 + "\\n"
+                "GITHUB_TOKEN=ghp_" + "A" * 36 + "\n"
+                "GOOGLE_API_KEY=AIza" + "A" * 35 + "\n"
                 "SLACK_TOKEN=xoxb-" + "A" * 20,
                 encoding="utf-8",
             )

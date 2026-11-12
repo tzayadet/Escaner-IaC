@@ -1,0 +1,14 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IaC Scanner | Demo</title><style>
+:root{color-scheme:dark;--bg:#101015;--panel:#1a1b23;--line:#343644;--text:#f0f0f4;--muted:#a8a8b6;--a:#ffbd69}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0,#39291a,transparent 34%),var(--bg);color:var(--text);font:16px/1.6 system-ui}main{max-width:960px;margin:auto;padding:56px 24px}small,.tag{color:var(--a);letter-spacing:.16em;text-transform:uppercase;font:600 11px ui-monospace}h1{font-size:clamp(2.5rem,7vw,4rem);line-height:1.05;margin:14px 0}p{color:var(--muted);max-width:760px}.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:28px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}pre{overflow:auto;background:#0b0b10;padding:18px;border:1px solid var(--line);border-radius:10px;color:#f5d7b1}a{color:var(--a)}.btn{display:inline-block;border:1px solid #8b663b;border-radius:8px;padding:10px 14px;text-decoration:none;margin:8px 8px 0 0}footer{margin-top:36px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:13px}</style></head><body><main><small>Python · Static analysis · IaC · CI/CD</small><h1>IaC Scanner</h1><p>Lightweight static scanner prototype that searches infrastructure and configuration files for common exposed-secret patterns. It produces machine-readable JSON and a non-zero exit code when matches are detected.</p><a class="btn" href="https://github.com/tzayadet/Escaner-IaC">Source code</a><a class="btn" href="https://github.com/tzayadet/Escaner-IaC/blob/main/README.md">Documentation</a><section class="row"><article class="card"><div class="tag">01 / COVERAGE</div><h2>Configuration files</h2><p>Terraform, YAML, JSON, shell, TOML, INI and environment files.</p></article><article class="card"><div class="tag">02 / DETECTION</div><h2>Heuristic patterns</h2><p>Recognises common cloud-key prefixes, private-key headers and plaintext secret assignments.</p></article><article class="card"><div class="tag">03 / INTEGRATION</div><h2>CI-friendly output</h2><p>JSON output and exit codes support use as a simple pipeline gate.</p></article></section><div class="card"><div class="tag">SYNTHETIC FINDINGS · NOT A REAL SCAN</div><h2>Illustrative report</h2><pre>{
+  "scanner": "IaC Scanner",
+  "files_scanned": 12,
+  "findings": [
+    {
+      "rule": "PLAINTEXT_SECRET_ASSIGNMENT",
+      "file": "infra/example.tf",
+      "line": 18,
+      "severity": "review"
+    }
+  ],
+  "note": "fabricated sample for UI illustration"
+}</pre><p>This is a regex-based detector, not a semantic Terraform analyser. False positives and false negatives are possible. No files are uploaded or modified by this showcase.</p></div><footer>Prototype showcase · Sample findings are fictional.</footer></main></body></html>

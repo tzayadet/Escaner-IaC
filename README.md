@@ -45,6 +45,6 @@ Consulta [LICENSE](LICENSE).
 
 ## Demo y documentación visual
 
-Showcase estático con un informe ficticio: https://tzayadet.github.io/Escaner-IaC/
+Showcase estático preparado en `docs/` con un informe ficticio. GitHub Pages aún no está habilitado para este repositorio; la demo no debe considerarse publicada. Cuando se active Pages en **Settings → Pages → Build and deployment → Source → GitHub Actions**, configura la variable `ENABLE_PAGES=true` en **Settings → Secrets and variables → Actions → Variables**.
 
 La demo no analiza archivos ni envía información. El escáner real es una herramienta CLI local basada en patrones heurísticos.

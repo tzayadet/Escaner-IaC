@@ -8,7 +8,7 @@
 A lightweight Python scanner for common exposed-secret patterns in infrastructure-as-code and configuration files. It produces JSON findings and CI-friendly exit codes, without uploading scanned content.
 
 <p align="center">
-  <a href="https://github.com/tzayadet/Escaner-IaC/blob/main/docs/index.html"><strong>SHOWCASE SOURCE ↗</strong></a> ·
+  <a href="https://tzayadet.github.io/Escaner-IaC/"><strong>LIVE DEMO ↗</strong></a> ·
   <a href="https://github.com/tzayadet/Escaner-IaC"><strong>SOURCE CODE</strong></a>
 </p>
 
@@ -52,7 +52,7 @@ Mounting the target directory read-only is recommended.
 
 ## Showcase
 
-The [showcase source](docs/index.html) uses illustrative findings only. It does not inspect repositories or files in the browser. To publish the showcase, enable GitHub Pages with GitHub Actions as its source and set the repository variable `ENABLE_PAGES` to `true`. Until then, the deployment job is intentionally skipped.
+The [showcase source](docs/index.html) uses illustrative findings only. It does not inspect repositories or files in the browser. The showcase is published separately from the local tool. It is a static demonstration and does not execute the application.
 
 ## Validation
 

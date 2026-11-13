@@ -58,11 +58,13 @@ def iter_files(root: Path):
 
 
 def run(root: Path) -> dict[str, list[str]]:
+    resolved_root = root.resolve(strict=True)
     results = {}
-    for path in iter_files(root):
+    for path in iter_files(resolved_root):
         hits = scan_file(path)
         if hits:
-            results[str(path)] = hits
+            # Keep reports portable and avoid leaking the operator's local path.
+            results[path.relative_to(resolved_root).as_posix()] = hits
     return results
 
 

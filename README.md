@@ -52,7 +52,7 @@ Mounting the target directory read-only is recommended.
 
 ## Showcase
 
-The [showcase source](docs/index.html) uses illustrative findings only. It does not inspect repositories or files in the browser. GitHub Pages deployment is configured, but Pages must be enabled in repository settings with GitHub Actions as the source before a public URL can be confirmed.
+The [showcase source](docs/index.html) uses illustrative findings only. It does not inspect repositories or files in the browser. To publish the showcase, enable GitHub Pages with GitHub Actions as its source and set the repository variable `ENABLE_PAGES` to `true`. Until then, the deployment job is intentionally skipped.
 
 ## Validation
 

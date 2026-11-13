@@ -17,6 +17,20 @@ class ScanTests(unittest.TestCase):
 
             self.assertEqual(scan_file(path), ["aws_key", "password"])
 
+    def test_reports_relative_paths_instead_of_local_absolute_paths(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "workspace"
+            nested = root / "infra"
+            nested.mkdir(parents=True)
+            (nested / "main.tf").write_text(
+                'password = "example-secret-value"', encoding="utf-8"
+            )
+
+            results = run(root)
+
+            self.assertEqual(list(results), ["infra/main.tf"])
+            self.assertFalse(Path(next(iter(results))).is_absolute())
+
     def test_ignores_unsupported_extensions(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
